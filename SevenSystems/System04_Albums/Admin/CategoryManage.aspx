@@ -16,7 +16,14 @@
         <hr />
 
     <div>
-        <asp:GridView ID="gvCategories" runat="server">
+        <asp:GridView ID="gvCategories" runat="server" DataKeyNames="Id" OnRowCancelingEdit="gvCategories_RowCancelingEdit" OnRowDeleting="gvCategories_RowDeleting" OnRowEditing="gvCategories_RowEditing" OnRowUpdating="gvCategories_RowUpdating" AutoGenerateColumns="False">
+            <Columns>
+                <asp:CommandField ShowEditButton="True" />
+                <asp:CommandField ShowDeleteButton="True" />
+                <asp:CommandField />
+                <asp:BoundField DataField="Id" HeaderText="編號" ReadOnly="True" />
+                <asp:BoundField DataField="Name" HeaderText="類別名稱" />
+            </Columns>
 
         </asp:GridView>
     </div>

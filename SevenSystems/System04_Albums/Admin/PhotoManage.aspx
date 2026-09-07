@@ -46,9 +46,9 @@
 <asp:GridView
     ID="gvPhotos"
     runat="server"
-    AutoGenerateColumns="false"
+    AutoGenerateColumns="False"
     DataKeyNames="Id"
-    OnRowCommand="gvPhotos_RowCommand">
+    OnRowCommand="gvPhotos_RowCommand" OnRowCancelingEdit="gvPhotos_RowCancelingEdit" OnRowDeleting="gvPhotos_RowDeleting" OnRowEditing="gvPhotos_RowEditing"  OnRowUpdating="gvPhotos_RowUpdating">
     <Columns>
         <asp:TemplateField HeaderText="照片">
             <ItemTemplate>
@@ -70,11 +70,13 @@
 
         <asp:BoundField
             DataField="CreatedAt"
-            HeaderText="上傳時間" />
+            HeaderText="上傳時間" ReadOnly="True" />
         <asp:ButtonField
     Text="設為封面"
     CommandName="SetCover"
     ButtonType="Button" />
+        <asp:CommandField ShowEditButton="True" />
+        <asp:CommandField ShowDeleteButton="True" />
     </Columns>
 </asp:GridView>
 </asp:Content>

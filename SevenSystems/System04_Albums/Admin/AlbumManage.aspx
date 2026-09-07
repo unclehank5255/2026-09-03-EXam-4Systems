@@ -39,11 +39,11 @@
 <asp:GridView
     ID="gvAlbums"
     runat="server"
-    AutoGenerateColumns="false">
+    AutoGenerateColumns="False" OnRowCancelingEdit="gvAlbums_RowCancelingEdit" OnRowDeleting="gvAlbums_RowDeleting" OnRowEditing="gvAlbums_RowEditing" OnRowUpdating="gvAlbums_RowUpdating" DataKeyNames="Id">
     <Columns>
         <asp:BoundField
             DataField="Id"
-            HeaderText="編號" />
+            HeaderText="編號" ReadOnly="True" />
 
         <asp:BoundField
             DataField="Title"
@@ -51,16 +51,18 @@
 
         <asp:BoundField
             DataField="CategoryName"
-            HeaderText="類別" />
+            HeaderText="類別" ReadOnly="True" />
 
         <asp:BoundField
             DataField="CreatedAt"
-            HeaderText="建立時間" />
+            HeaderText="建立時間" ReadOnly="True" />
 
         <asp:HyperLinkField
             Text="管理照片"
             DataNavigateUrlFields="Id"
             DataNavigateUrlFormatString="PhotoManage.aspx?albumId={0}" />
+        <asp:CommandField ShowEditButton="True" />
+        <asp:CommandField ShowDeleteButton="True" />
     </Columns>
 </asp:GridView>
 </asp:Content>

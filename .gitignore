@@ -427,3 +427,14 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Not part of this exam
+SevenSystems/System06_Forums/
+
+# Uploaded files
+SevenSystems/Uploads/
+
+# Temporary test files
+SevenSystems/test.aspx
+SevenSystems/test.aspx.cs
+SevenSystems/test.aspx.designer.cs
