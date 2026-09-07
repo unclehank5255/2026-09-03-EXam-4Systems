@@ -107,5 +107,93 @@ namespace SevenSystems.System04_Albums.Admin
                 lblMessage.Text = "相簿新增失敗";
             }
         }
+
+ 
+
+        protected void gvAlbums_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            gvAlbums.EditIndex = e.NewEditIndex;
+            LoadAlbums();
+        }
+
+        protected void gvAlbums_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            gvAlbums.EditIndex = -1;
+            LoadAlbums();
+        }
+
+
+        protected void gvAlbums_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            int albumId = Convert.ToInt32(gvAlbums.DataKeys[e.RowIndex].Value);
+            string title = Convert.ToString(e.NewValues["Title"]).Trim();
+            string sql = @"UPDATE Albums SET Title = @Title WHERE Id = @Id";
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[]
+                   {
+                    new SqlParameter("@Title", SqlDbType.NVarChar, 200)
+                    {
+                        Value = title
+                    },
+                    new SqlParameter("@Id", SqlDbType.Int)
+                    {
+                        Value = albumId
+                    }
+                   };
+                int result = DbHelper.ExcuteNonQuery(sql, parameters);
+                if (result > 0)
+                {
+                    gvAlbums.EditIndex = -1;
+                    LoadAlbums();
+                    lblMessage.Text = "相簿更新成功";
+                }
+                else
+                {
+                    lblMessage.Text = "相簿更新失敗";
+                }
+            }
+            catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+            {
+                lblMessage.Text = "相簿標題已經存在";
+                
+            }
+        }
+        
+
+        protected void gvAlbums_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int albumId = Convert.ToInt32(gvAlbums.DataKeys[e.RowIndex].Value);
+            string sql = @"DELETE FROM Albums WHERE Id = @Id";
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[]
+                   {
+                   
+                    new SqlParameter("@Id", SqlDbType.Int)
+                    {
+                        Value = albumId
+                    }
+                   };
+                int result = DbHelper.ExcuteNonQuery(sql, parameters);
+                if (result > 0)
+                {
+                    gvAlbums.EditIndex = -1;
+                    LoadAlbums();
+                    lblMessage.Text = "相簿刪除成功";
+                }
+                else
+                {
+                    lblMessage.Text = "相簿刪除失敗";
+                }
+            }
+            catch (SqlException ex) when (ex.Number == 547 )
+            {
+                lblMessage.Text = "相簿有相關照片，無法刪除";
+
+            }
+
+        }
+
     }
 }
